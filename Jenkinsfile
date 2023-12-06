@@ -11,7 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("your-dockerhub-username/your-image-name")
+                    docker.build("ryang123ism/myimage")
                 }
             }
         }
