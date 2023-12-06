@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // Build the Docker image using the Dockerfile in the repository
                 script {
-                    def dockerImage = docker.build('your-docker-image:latest', '-f Dockerfile .')
+                    app = docker.build("ryang123ism/myimage")
                 }
             }
         }
