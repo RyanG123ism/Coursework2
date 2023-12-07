@@ -49,8 +49,8 @@ pipeline {
             
                 script {   
 
-                    WithCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {
-                        sh 'ssh -o StrictHostKeyChecking=no -1 $KEY_FILE ubuntu@ip-172-31-87-96 "kubectl set image deployments/myapp-deployment-v2 ryang123ism/myimage:1.0' + "${imageTag}" + '"'
+                    withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {
+                        sh 'ssh -o StrictHostKeyChecking=no -1 $KEY_FILE ubuntu@ip-172-31-87-96 "kubectl set image deployments/myapp-deployment-v2 ryang123ism/myimage:' + "${imageTag}" + '"'
                 }            
         }
     }
