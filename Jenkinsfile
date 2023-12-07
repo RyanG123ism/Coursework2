@@ -42,26 +42,22 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy to Kubernetes') {
-            steps{                         
-                script { 
-                    def imageTag = "${env.BUILD_NUMBER}"
-                    
-                    withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {
-                        sh 'ssh -o StrictHostKeyChecking=no -1 $KEY_FILE ubuntu@ip-54.166.117.85 "kubectl set image deployments/myapp-deployment-v2 ryang123ism/myimage:' + "${imageTag}" + '"'
-                }            
-            }
-        }                      
-    }
         
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {                  
+                    // Use kubectl to apply Kubernetes manifests
+                    sh 'kubectl apply -f your-kubernetes-manifest.yaml'
+                    }
+                }
+            }
+        }
         post {
         success {
             echo 'Pipeline succeeded!'
         }
         failure {
             echo 'Pipeline failed!'
-        }
         }
     }
 }
