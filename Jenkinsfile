@@ -44,16 +44,17 @@ pipeline {
         }
 
         stage('Deploy to Kubernetes') {
-            steps{
-                def imageTag = "${env.BUILD_NUMBER}"
-            
-                script {   
+            steps{                         
+                script { 
+                    def imageTag = "${env.BUILD_NUMBER}"
+                    
                     withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {
                         sh 'ssh -o StrictHostKeyChecking=no -1 $KEY_FILE ubuntu@ip-54.166.117.85 "kubectl set image deployments/myapp-deployment-v2 ryang123ism/myimage:' + "${imageTag}" + '"'
                 }            
             }
         }                      
     }
+        
         post {
         success {
             echo 'Pipeline succeeded!'
