@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        docker.image("your-dockerhub-username/your-image-name").push()
+                        docker.image("ryang123ism/myimage:1.0").push()
                     }
                 }
             }
