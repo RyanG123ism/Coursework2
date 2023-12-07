@@ -11,8 +11,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image using the Dockerfile in the repository
-                script {
-                    
+                script {                 
                     app = docker.build("ryang123ism/newimage:1.0")
                 }
             }
