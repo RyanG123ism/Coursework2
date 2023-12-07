@@ -48,8 +48,8 @@ pipeline {
                 script { 
                     def imageTag = "${env.BUILD_NUMBER}"
                     
-                    withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {
-                        sh 'ssh -o StrictHostKeyChecking=no -1 $KEY_FILE ubuntu@ip-54.166.117.85 "kubectl set image deployments/myapp-deployment-v2 ryang123ism/myimage:' + "${imageTag}" + '"'
+                    withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {                        
+                        ssh -o StrictHostKeyChecking=no -o Protocol=1 -i $KEY_FILE ubuntu@ip-54.166.117.85 "kubectl set image deployment/myapp-deployment-v2 myimage=ryang123ism/myimage:1.0"
                     }            
                 }
             }                      
