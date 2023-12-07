@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Run tests inside the container
-                    docker.image("your-dockerhub-username/your-image-name").inside {
+                    docker.image("ryang123ism/myimage:1.0").inside {
                         sh 'npm test'
                     }
                 }
