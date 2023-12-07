@@ -43,21 +43,11 @@ pipeline {
             }
         }
 
-        stage('Bind SSH') {
-            steps {
-                script {                  
-                    sshagent(['my-ssh-key']) {
-    sh 'scp /Users/exampleUser/home/aws/listDProcessesNativeStacks.sh ubuntu@ip-172-31-59-14.ec2.internal:/home/ubuntu'
-}
-                }
-            }
-        }
-
         stage('Deploy to Kubernetes') {
             steps {
                 script {                  
                     // Use kubectl to apply Kubernetes manifests
-                    sh 'kubectl apply -f your-kubernetes-manifest.yaml'
+                    sh 'kubectl apply -f my-app-deployment-v2.yaml'
                 }
             }
         }
