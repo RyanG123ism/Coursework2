@@ -11,8 +11,10 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build the Docker image using the Dockerfile in the repository
-                script {                 
-                    app = docker.build("ryang123ism/myimage:2.0")
+                script { 
+                    def imageTag = "${env.BUILD_NUMBER}"
+                    
+                    app = docker.build("ryang123ism/myimage:${imageTag}")
                 }
             }
         }
@@ -36,8 +38,10 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 script {
+                    def imageTag = "${env.BUILD_NUMBER}"
+                    
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        docker.image("ryang123ism/myimage:2.0").push()
+                        docker.image("ryang123ism/myimage:${imageTag}").push()
                     }
                 }
             }
@@ -49,7 +53,7 @@ pipeline {
                     def imageTag = "${env.BUILD_NUMBER}"
                     
                     withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {                                                
-                        sh "ssh -o StrictHostKeyChecking=no -o Protocol=1 -i $KEY_FILE ubuntu@54.166.117.85 \"kubectl set image deployments/myapp-deployment-v2 myimage=ryang123ism/myimage:2.0\""
+                        sh "ssh -o StrictHostKeyChecking=no -o Protocol=1 -i $KEY_FILE ubuntu@54.166.117.85 \"kubectl set image deployments/myapp-deployment-v2 myimage=ryang123ism/myimage:${imageTag}\""
                     }           
                 }
             }                      
