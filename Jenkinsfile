@@ -21,11 +21,11 @@ pipeline {
             steps {
                 script {
                     // Run a temporary container to test the launch
-                    def testContainer = docker.image('your-docker-image:latest').run('-d', '/bin/sh', '-c', 'while true; do sleep 10; done')
+                    def testContainer = docker.image("ryang123ism/myimage:1.0").run('--rm', '-d', '/bin/sh', '-c', 'while true; do sleep 10; done')
 
-                    // Check the exit code to ensure the container launched successfully
-                    def exitCode = testContainer.inside("/bin/sh -c 'exit 0'", returnStatus: true)
-                    if (exitCode == 0) {
+                    // Check if the container is running
+                    def isRunning = testContainer.inside("/bin/sh -c 'exit 0'", returnStatus: true)
+                    if (isRunning == 0) {
                         echo 'Container launch test passed!'
                     } else {
                         error 'Container launch test failed!'
