@@ -22,8 +22,9 @@ pipeline {
         stage('Test') {
             steps {
                 script {
+                    def imageTag = "${env.BUILD_NUMBER}"
                     // Run a temporary container to test the launch
-                    def exitCode = sh(script: 'docker run --rm -d ryang123ism/myimage:1.0 /bin/sh -c "while true; do sleep 10; done"', returnStatus: true)
+                    def exitCode = sh(script: 'docker run --rm -d ryang123ism/myimage:${imageTag} /bin/sh -c "while true; do sleep 10; done"', returnStatus: true)
 
                     // Check if the container launched successfully
                     if (exitCode == 0) {
