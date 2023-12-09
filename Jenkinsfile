@@ -54,7 +54,7 @@ pipeline {
                     def imageTag = "${env.BUILD_NUMBER}"
                     
                     withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-key', keyFileVariable: "KEY_FILE")]) {                                                
-                        sh "ssh -o StrictHostKeyChecking=no -o Protocol=1 -i $KEY_FILE ubuntu@54.173.41.71 \"kubectl set image deployments/myapp-deployment-v2 myimage=ryang123ism/myimage:${imageTag}\""
+                        sh "ssh -o StrictHostKeyChecking=no -o Protocol=1 -i $KEY_FILE ubuntu@52.87.204.39 \"kubectl set image deployments/myapp-deployment-v2 myimage=ryang123ism/myimage:${imageTag}\""
                     }           
                 }
             }                      
